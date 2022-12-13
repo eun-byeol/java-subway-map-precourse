@@ -2,6 +2,8 @@ package subway.domain;
 
 import subway.utils.ErrorMessage;
 
+import java.util.List;
+
 public class SubwayProgram {
 
     public SubwayProgram() {
@@ -41,4 +43,18 @@ public class SubwayProgram {
             throw new IllegalArgumentException(ErrorMessage.NON_EXISTENT_LINE.getDescription());
         }
     }
+
+    public void addStationInLine(String lineName, String stationName, String positionName) {
+        Line line = LineRepository.select(lineName);
+        Station station = new Station(stationName);
+        Position position = new Position(positionName);
+
+        if (line.contains(stationName)) {
+            throw new IllegalArgumentException(ErrorMessage.EXISTENT_STATION_IN_LINE.getDescription());
+        }
+        line.addStationToPosition(station, position);
+        addStationIfNotExist(stationName);
+    }
+
+
 }
