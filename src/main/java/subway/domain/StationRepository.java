@@ -1,5 +1,7 @@
 package subway.domain;
 
+import subway.utils.ErrorMessage;
+
 import java.util.*;
 
 public class StationRepository {
@@ -23,6 +25,13 @@ public class StationRepository {
     }
 
     public static boolean deleteStation(String name) {
+        validateInLine(name);
         return stations.removeIf(station -> Objects.equals(station.getName(), name));
+    }
+
+    private static void validateInLine(String name) {
+        if (LineRepository.isInLine(name)) {
+            throw new IllegalArgumentException(ErrorMessage.STATION_REGISTERED_IN_LINE.getDescription());
+        }
     }
 }
