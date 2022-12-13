@@ -34,12 +34,20 @@ public class Line {
         }
     }
 
-    public boolean contains (String name) {
+    public boolean contains(String name) {
         for (Station station : stations) {
             if (station.getName().equals(name)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public void addStationToPosition(Station station, Position position) {
+        try {
+            stations.add(position.getPosition() - 1, station);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new IllegalArgumentException(ErrorMessage.POSITION_IS_NOT_VALID_RANGE.getDescription());
+        }
     }
 }
