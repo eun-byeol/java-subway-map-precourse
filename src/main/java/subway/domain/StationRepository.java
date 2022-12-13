@@ -1,15 +1,21 @@
 package subway.domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class StationRepository {
-    private static final List<Station> stations = new ArrayList<>();
+    private static LinkedList<Station> stations = new LinkedList<>();
 
     public static List<Station> stations() {
         return Collections.unmodifiableList(stations);
+    }
+
+    public static boolean isExistentStation(String name) {
+        for (Station station : stations) {
+            if (station.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void addStation(Station station) {
