@@ -2,7 +2,6 @@ package subway.domain;
 
 import subway.utils.ErrorMessage;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -10,6 +9,7 @@ public class Line {
     private String name;
     private LinkedList<Station> stations;
     private static final int MIN_LENGTH_OF_NAME = 2;
+    private static final int MIN_LENGTH_OF_SIZE = 2;
 
     public Line(String name, Station ascending, Station descending) {
         validateNameSize(name);
@@ -48,6 +48,21 @@ public class Line {
             stations.add(position.getPosition() - 1, station);
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new IllegalArgumentException(ErrorMessage.POSITION_IS_NOT_VALID_RANGE.getDescription());
+        }
+    }
+
+    public void deleteStationInLine(Station station) {
+        validateLineSize();
+        try {
+            stations.remove(station);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new IllegalArgumentException(ErrorMessage.NON_EXISTENT_STATION_IN_LINE.getDescription());
+        }
+    }
+
+    private void validateLineSize() {
+        if (stations.size() < MIN_LENGTH_OF_SIZE) {
+            throw new IllegalArgumentException(ErrorMessage.LINE_SIZE_HAS_TO_OVER_TWO.getDescription());
         }
     }
 }
