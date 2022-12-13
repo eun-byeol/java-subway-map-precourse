@@ -9,7 +9,9 @@ public enum ErrorMessage {
     EXISTENT_STATION_IN_LINE("이미 등록된 구간입니다."),
     POSITION_NOT_INTEGER("순서는 정수여야 합니다."),
     POSITION_HAS_TO_POSITIVE_NUMBER("순서는 1보다 작을 수 없습니다."),
-    POSITION_IS_NOT_VALID_RANGE("순서는 해당 노선의 크기 + 1보다 클 수 없습니다.");
+    POSITION_IS_NOT_VALID_RANGE("순서는 해당 노선의 크기 + 1보다 클 수 없습니다."),
+    NON_EXISTENT_STATION_IN_LINE("노선에 해당 역이 존재하지 않습니다."),
+    LINE_SIZE_HAS_TO_OVER_TWO("노선에 포함된 역이 두 개 이하일 때는 역을 제거할 수 없습니다.");
 
     private String description;
 
