@@ -2,8 +2,6 @@ package subway.domain;
 
 import subway.utils.ErrorMessage;
 
-import java.util.List;
-
 public class SubwayProgram {
 
     public SubwayProgram() {
@@ -56,5 +54,10 @@ public class SubwayProgram {
         addStationIfNotExist(stationName);
     }
 
+    public void deleteStationInLine(String lineName, String stationName) {
+        Line line = LineRepository.select(lineName);
+        Station station = StationRepository.select(stationName);
 
+        line.deleteStationInLine(station);
+    }
 }
