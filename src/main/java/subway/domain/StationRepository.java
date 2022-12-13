@@ -20,6 +20,15 @@ public class StationRepository {
         return false;
     }
 
+    public static Station select(String name) {
+        for (Station station : stations) {
+            if (station.getName().equals(name)) {
+                return station;
+            }
+        }
+        throw new IllegalArgumentException(ErrorMessage.NON_EXISTENT_STATION.getDescription());
+    }
+
     public static void addStation(Station station) {
         stations.add(station);
     }
