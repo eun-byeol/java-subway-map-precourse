@@ -1,5 +1,7 @@
 package subway.domain;
 
+import subway.utils.ErrorMessage;
+
 import java.util.*;
 
 public class LineRepository {
@@ -27,6 +29,15 @@ public class LineRepository {
         return false;
     }
 
+    public static Line select(String name) {
+        for (Line line : lines) {
+            if (line.getName().equals(name)) {
+                return line;
+            }
+        }
+        throw new IllegalArgumentException(ErrorMessage.NON_EXISTENT_LINE.getDescription());
+    }
+
     public static void addLine(Line line) {
         lines.add(line);
     }
@@ -34,4 +45,6 @@ public class LineRepository {
     public static boolean deleteLineByName(String name) {
         return lines.removeIf(line -> Objects.equals(line.getName(), name));
     }
+
+
 }
