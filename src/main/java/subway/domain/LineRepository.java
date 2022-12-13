@@ -9,6 +9,15 @@ public class LineRepository {
         return Collections.unmodifiableList(lines);
     }
 
+    public static boolean isExistentLine(String lineName) {
+        for (Line line : lines) {
+            if (line.getName().equals(lineName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static boolean isInLine(String stationName) {
         for (Line line : lines) {
             if (line.contains(stationName)) {
