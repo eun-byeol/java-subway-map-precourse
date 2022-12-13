@@ -2,8 +2,6 @@ package subway.domain;
 
 import subway.utils.ErrorMessage;
 
-import java.util.List;
-
 public class SubwayProgram {
 
     public SubwayProgram() {
@@ -35,6 +33,12 @@ public class SubwayProgram {
     private void addStationIfNotExist(String name) {
         if (StationRepository.isExistentStation(name)) {
             addStation(name);
+        }
+    }
+
+    public void deleteLine(String name) {
+        if (!LineRepository.deleteLineByName(name)) {
+            throw new IllegalArgumentException(ErrorMessage.NON_EXISTENT_LINE.getDescription());
         }
     }
 }
