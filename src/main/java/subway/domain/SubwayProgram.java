@@ -13,7 +13,7 @@ public class SubwayProgram {
     }
 
     private void initialStationRepository() {
-        List<String> stationNames = Arrays.asList("교대역, 강남역, 역삼역, 남부터미널역, 양재역, 양재시민의숲역, 매봉역");
+        List<String> stationNames = Arrays.asList("교대역", "강남역", "역삼역", "남부터미널역", "양재역", "양재시민의숲역", "매봉역");
         for (String station : stationNames) {
             addStation(station);
         }
@@ -40,18 +40,28 @@ public class SubwayProgram {
     }
 
     public void addLine(String LineName, String ascendingTerminusStation, String descendingTerminusStation) {
+        Station ascendingStation = returnStation(ascendingTerminusStation);
+        Station descendingStation = returnStation(descendingTerminusStation);
         Line newLine = new Line(
                 LineName,
-                new Station(ascendingTerminusStation),
-                new Station(descendingTerminusStation)
+                ascendingStation,
+                descendingStation
         );
         LineRepository.addLine(newLine);
         addStationIfNotExist(ascendingTerminusStation);
         addStationIfNotExist(descendingTerminusStation);
     }
 
+    public Station returnStation(String stationName) {
+        try {
+            return StationRepository.select(stationName);
+        } catch (IllegalArgumentException e) {
+            return new Station(stationName);
+        }
+    }
+
     private void addStationIfNotExist(String name) {
-        if (StationRepository.isExistentStation(name)) {
+        if (!StationRepository.isExistentStation(name)) {
             addStation(name);
         }
     }
@@ -64,7 +74,7 @@ public class SubwayProgram {
 
     public void addStationInLine(String lineName, String stationName, String positionName) {
         Line line = LineRepository.select(lineName);
-        Station station = new Station(stationName);
+        Station station = returnStation(stationName);
         Position position = new Position(positionName);
 
         if (line.contains(stationName)) {
