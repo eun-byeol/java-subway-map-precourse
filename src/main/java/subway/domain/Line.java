@@ -3,7 +3,9 @@ package subway.domain;
 import subway.utils.ErrorMessage;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Line {
     private String name;
@@ -22,6 +24,10 @@ public class Line {
         return name;
     }
 
+    public List<Station> getStations() {
+        return Collections.unmodifiableList(stations);
+    }
+
     private void validateNameSize(String name) {
         if (name.length() < MIN_LENGTH_OF_NAME) {
             throw new IllegalArgumentException(ErrorMessage.NAME_SIZE_OVER_TWO.getDescription());
@@ -30,7 +36,7 @@ public class Line {
 
     private void validateDuplicateName(String name) {
         if (LineRepository.isExistentLine(name)) {
-            throw new IllegalArgumentException(ErrorMessage.DUPLICATE_NAME.getDescription());
+            throw new IllegalArgumentException(ErrorMessage.DUPLICATE_LINE_NAME.getDescription());
         }
     }
 
@@ -46,22 +52,20 @@ public class Line {
     public void addStationToPosition(Station station, Position position) {
         try {
             stations.add(position.getPosition() - 1, station);
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             throw new IllegalArgumentException(ErrorMessage.POSITION_IS_NOT_VALID_RANGE.getDescription());
         }
     }
 
     public void deleteStationInLine(Station station) {
         validateLineSize();
-        try {
-            stations.remove(station);
-        } catch (ArrayIndexOutOfBoundsException e) {
+        if (!stations.remove(station)) {
             throw new IllegalArgumentException(ErrorMessage.NON_EXISTENT_STATION_IN_LINE.getDescription());
         }
     }
 
     private void validateLineSize() {
-        if (stations.size() < MIN_LENGTH_OF_SIZE) {
+        if (stations.size() <= MIN_LENGTH_OF_SIZE) {
             throw new IllegalArgumentException(ErrorMessage.LINE_SIZE_HAS_TO_OVER_TWO.getDescription());
         }
     }
