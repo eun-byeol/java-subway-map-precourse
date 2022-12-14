@@ -2,8 +2,7 @@ package subway;
 
 import subway.controller.Controller;
 import subway.utils.CommandType;
-
-import java.util.Scanner;
+import subway.view.InputView;
 
 public class Application {
     public static void main(String[] args) {
@@ -15,17 +14,17 @@ public class Application {
             if (!controller.run(command)) {
                 isStop = true;
             }
+            System.out.println();
         }
     }
 
     public static CommandType scannerCommand() {
-        final Scanner scanner = new Scanner(System.in);
+        InputView inputView = new InputView();
         while (true) {
             try {
-                String command = scanner.next();
-                return CommandType.selectCommandTypeByCode(command);
+                return CommandType.selectCommandTypeByCode(inputView.inputMainCommand());
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+                System.out.println(e.getMessage() + "\n");
             }
         }
     }
