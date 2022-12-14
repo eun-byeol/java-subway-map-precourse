@@ -24,7 +24,7 @@ public class Station {
 
     private void validateDuplicateName(String name) {
         if (StationRepository.isExistentStation(name)) {
-            throw new IllegalArgumentException(ErrorMessage.DUPLICATE_NAME.getDescription());
+            throw new IllegalArgumentException(ErrorMessage.DUPLICATE_STATION_NAME.getDescription());
         }
     }
 }
